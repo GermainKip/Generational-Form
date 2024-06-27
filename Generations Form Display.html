@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generation Identifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to bottom, red, black, green);
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        .container::before, .container::after,
+        .container > .top-right, .container > .bottom-left {
+            content: "";
+            width: 50px;
+            height: 50px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/50px-Flag_of_Kenya.svg.png');
+            background-size: cover;
+            position: absolute;
+        }
+        .container::before {
+            top: -25px;
+            left: -25px;
+        }
+        .container::after {
+            bottom: -25px;
+            right: -25px;
+        }
+        .top-right {
+            top: -25px;
+            right: -25px;
+        }
+        .bottom-left {
+            bottom: -25px;
+            left: -25px;
+        }
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #response {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find Your Generation</h1>
+        <form id="genForm">
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <input type="number" id="age" name="age" placeholder="Enter your age" required>
+            <button type="button" onclick="determineGeneration()">Submit</button>
+        </form>
+        <div id="response"></div>
+        <div class="top-right"></div>
+        <div class="bottom-left"></div>
+    </div>
+
+    <script>
+        function determineGeneration() {
+            const username = document.getElementById('username').value;
+            const age = parseInt(document.getElementById('age').value);
+            const currentYear = new Date().getFullYear();
+            const birthYear = currentYear - age;
+            let generation;
+
+            if (birthYear >= 1996 && birthYear <= 2015) {
+                generation = "Gen Z";
+            } else if (birthYear >= 1977 && birthYear <= 1995) {
+                generation = "Millennial";
+            } else if (birthYear >= 1965 && birthYear <= 1976) {
+                generation = "Gen X";
+            } else if (birthYear <= 1964) {
+                generation = "Boomer";
+            } else {
+                generation = "Unknown";
+            }
+
+            const responseDiv = document.getElementById('response');
+            responseDiv.textContent = `Congratulations, ${username}! You are a ${generation}.`;
+        }
+    </script>
+</body>
+</html>
